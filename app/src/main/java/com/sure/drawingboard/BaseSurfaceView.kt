@@ -2,8 +2,7 @@ package com.sure.drawingboard
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.PixelFormat
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -27,6 +26,9 @@ open class BaseSurfaceView @JvmOverloads constructor(
         isFocusable = true
         isFocusableInTouchMode = true
         this.keepScreenOn = true
+        //设置下面两句话让黑板变白板
+        this.setZOrderOnTop(true);
+        this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
     }
 

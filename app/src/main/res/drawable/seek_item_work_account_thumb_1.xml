@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:gravity="center">
+                <shape android:shape="oval">
+                    <size android:width="13dp" android:height="13dp" />
+                    <solid android:color="#A999EC" />
+                    <!--            <item android:name="android:shadowColor">#fffde1e1</item>-->
+                    <!--            <item android:name="android:shadowDx">0</item>-->
+                    <!--            <item android:name="android:shadowDy">0</item>-->
+                </shape>
+            </item>
+            <item android:gravity="center">
+                <shape android:shape="oval">
+                    <size android:width="8dp" android:height="8dp" />
+                    <stroke android:width="0.5dp" android:color="#ffffffff" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- 普通无焦点状态 -->
+    <item android:state_focused="false" android:state_pressed="false">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <size android:width="13dp" android:height="13dp" />
+                    <solid android:color="#A999EC" />
+                    <corners android:radius="90dp" />
+                </shape>
+            </item>
+            <item android:gravity="center">
+                <shape android:shape="rectangle">
+                    <corners android:radius="90dp" />
+                    <size android:width="8dp" android:height="8dp" />
+                    <stroke android:width="0.5dp" android:color="#ffffffff" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

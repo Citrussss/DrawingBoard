@@ -6,7 +6,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.view.*
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.SurfaceHolder
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
 
 
 /**
@@ -20,9 +24,9 @@ class DrawingBoardSurfaceView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : BaseSurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
-    private val paths: ArrayList<Path> = ArrayList()
+    private val paths: ArrayList<PathBody> = ArrayList()
     private var path: Path = Path();
-    private val paint: Paint = Paint().apply {
+    private var paint: Paint = Paint().apply {
         this.isAntiAlias = true;
         this.strokeWidth = 10f;
         this.color = Color.BLUE
@@ -39,7 +43,7 @@ class DrawingBoardSurfaceView @JvmOverloads constructor(
                 MotionEvent.ACTION_DOWN -> {
                     path = Path().apply {
                         this.moveTo(e.x, e.y)
-                        paths.add(this)
+//                        paths.add(this)
                     }
                 }
             }
@@ -63,8 +67,8 @@ class DrawingBoardSurfaceView @JvmOverloads constructor(
             try {
                 println("============draw========${paths.size}")
                 mCanvas = mSurfaceHolder!!.lockCanvas()
-                for (path in ArrayList(paths)) {
-                    mCanvas?.drawPath(path, paint)
+                for (body in ArrayList(paths)) {
+                    mCanvas?.drawPath(body.path, body.paint)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -83,11 +87,9 @@ class DrawingBoardSurfaceView @JvmOverloads constructor(
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> path = Path().apply {
                 this.moveTo(event.x, event.y)
-                paths.add(this)
-//                preX = event.x
-//                preY = event.y
+//                paths.add(this)
+                paths.add(PathBody(paint, this))
             }
-
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(event.x, event.y)
 //                Path().apply {
@@ -104,4 +106,47 @@ class DrawingBoardSurfaceView @JvmOverloads constructor(
         return true
     }
 
+    data class PathBody(val paint: Paint, val path: Path)
+
+    /**
+     * 设置粗细
+     */
+    public fun setThickness(@FloatRange(from = 0.0, to = 10.0) thickness: Float) {
+        paint = Paint().apply {
+            this.isAntiAlias = paint.isAntiAlias;
+            this.strokeWidth = thickness;
+            this.color = paint.color
+            this.strokeCap = paint.strokeCap       // 线帽，即画的线条两端是否带有圆角，ROUND，圆角
+            this.style = paint.style
+        }
+    }
+
+    /**
+     * 设置颜色
+     */
+    public fun setColor(@ColorInt color: Int) {
+        paint = Paint().apply {
+            this.isAntiAlias = paint.isAntiAlias;
+            this.strokeWidth = paint.strokeWidth;
+            this.color = color
+            this.strokeCap = paint.strokeCap       // 线帽，即画的线条两端是否带有圆角，ROUND，圆角
+            this.style = paint.style
+        }
+    }
+
+    /**
+     * 清空
+     */
+    public fun clear() {
+        paths.clear()
+    }
+
+    /**
+     * 撤销
+     */
+    public fun last() {
+        if (paths.isNotEmpty()) {
+            paths.removeAt(paths.size - 1)
+        }
+    }
 }

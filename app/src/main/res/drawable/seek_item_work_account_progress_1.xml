@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/sound_background">
+        <layer-list>
+            <item>
+                <shape>
+                    <size android:height="13dp" />
+                    <solid android:color="#00FFFFFF" />
+                    <corners android:radius="4dp" />
+                </shape>
+            </item>
+            <item
+                android:bottom="4dp"
+                android:top="4dp">
+                <shape>
+                    <size android:height="9dp" />
+                    <solid android:color="#00000000" />
+                    <corners android:radius="4dp" />
+                </shape>
+            </item>
+        </layer-list>
+
+    </item>
+    <item android:id="@+id/sound_progress">
+        <clip>
+            <scale android:scaleWidth="100%">
+                <layer-list>
+                    <item>
+                        <shape>
+                            <size android:height="13dp" />
+                            <solid android:color="#00FFFFFF" />
+                            <corners android:radius="4dp" />
+                        </shape>
+                    </item>
+                    <item
+                        android:bottom="4dp"
+                        android:top="4dp">
+                        <shape>
+                            <size android:height="9dp" />
+                            <solid android:color="#A999EC" />
+                            <corners android:radius="4dp" />
+                        </shape>
+                    </item>
+                </layer-list>
+            </scale>
+        </clip>
+    </item>
+</layer-list>
